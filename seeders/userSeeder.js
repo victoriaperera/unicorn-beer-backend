@@ -1,6 +1,5 @@
 const { faker } = require("@faker-js/faker");
 const User = require("../models/User");
-const Tweet = require("../models/Tweet");
 const bcrypt = require("bcryptjs");
 
 faker.locale = "en";
@@ -8,7 +7,7 @@ faker.locale = "en";
 module.exports = async () => {
   const users = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 2; i++) {
     users.push(
       new User({
         firstname: faker.name.firstName(),
@@ -20,23 +19,6 @@ module.exports = async () => {
         avatar: faker.image.avatar(),
       }),
     );
-  }
-  for (const user of users) {
-    const rndNumber = faker.datatype.number({ min: 0, max: users.length });
-    const userTo = users.filter((u) => u._id !== user._id);
-    for (let j = 0; j < rndNumber; j++) {
-      const tweet = new Tweet({
-        content: faker.lorem.sentence(10),
-        author: user._id,
-        likes: userTo,
-      });
-      user.tweets.push(tweet);
-      await tweet.save();
-    }
-    user.following = userTo;
-    for (let k = 0; k < userTo.length; k++) {
-      userTo[k].followers.push(user);
-    }
   }
 
   await User.insertMany(users);

@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const formidable = require("formidable");
 
 
 async function index(req, res) {
@@ -18,11 +17,7 @@ async function show(req, res) {
 }
 
 async function update(req, res) {
-  const form = formidable({
-    multiples: false,
-    uploadDir: __dirname + "/../public/img",
-    keepExtensions: true,
-  });
+ 
 
   form.parse(req, async (err, fields, files) => {
     const userUpdate = {
@@ -36,7 +31,6 @@ async function update(req, res) {
     const user = await User.findByIdAndUpdate(req.auth.userId, userUpdate, { new: true }).select(
       "-password",
     );
-
     return res.json(user);
   });
 }

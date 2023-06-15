@@ -12,11 +12,11 @@ module.exports = async () => {
       new User({
         firstname: faker.name.firstName(),
         lastname: faker.name.lastName(),
-        username: faker.internet.userName(),
         password: await bcrypt.hash(process.env.SESSION_CREDENTIAL, 10),
         email: faker.internet.email(),
-        description: faker.lorem.sentence(15),
-        avatar: faker.image.avatar(),
+        phone: faker.phone.number(),
+        address: faker.address.streetAddress(),
+        shippingAddress: faker.address.streetAddress(),
       }),
     );
   }

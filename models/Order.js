@@ -13,13 +13,6 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// orderSchema.methods.toJSON = function () {
-//   const user = this.toObject();
-//   user.id = user._id.toString();
-//   delete user._id;
-//   return user;
-// };
-
-// orderSchema.set("toJSON", { virtuals: true });
+orderSchema.set("toJSON", { virtuals: true });
 
 module.exports = mongoose.model("Order", orderSchema);

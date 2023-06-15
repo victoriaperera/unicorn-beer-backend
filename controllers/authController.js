@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const formidable = require("formidable");
 
 async function login(req, res) {
   const user = await User.findOne({ email: req.body.email });
@@ -9,7 +8,7 @@ async function login(req, res) {
     checkPass = await bcrypt.compare(req.body.password, user.password);
 
     if (checkPass) {
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
+      const token = jwt.sign({ d: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
         expiresIn: "10h",
       });
       delete user._doc.password;
@@ -46,7 +45,7 @@ async function signUp(req, res) {
       const user = await User.findOne({
         email: newUser.email,
       });
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
         expiresIn: "10h",
       });
       delete user._doc.password;

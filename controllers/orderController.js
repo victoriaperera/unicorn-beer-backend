@@ -11,10 +11,35 @@ async function show(req, res) {
   return res.json(order);
 }
 
-async function store(req, res) {}
+async function store(req, res) {
+  const order = await Order.create({
+    user: req.auth.id,
+    products: req.body.products,
+    totalAmount: req.body.totalAmount,
+    status: req.body.status,
+    paymentMethod: req.body.paymentMethod,
+  });
 
-async function update(req, res) {}
-async function destroy(req, res) {}
+  return res.status(201).json(order);
+}
+
+async function update(req, res) {
+  const order = await Order.findByIdAndUpdate(
+    req.body.orderId,
+    {
+      products: req.body.products,
+      totalAmount: req.body.totalAmount,
+      status: req.body.status,
+      paymentMethod: req.body.paymentMethod,
+    },
+    { new: true },
+  );
+  return res.status(209).json(order);
+}
+async function destroy(req, res) {
+  const order = await Order.findByIdAndDelete(req.body.orderId);
+  return res.status(200).send({message: "Order deleted"})
+}
 
 module.exports = {
   index,

@@ -4,14 +4,15 @@ const jwt = require("jsonwebtoken");
 const formidable = require("formidable");
 
 async function login(req, res) {
-  const user = await User.findOne({
-    $or: [{ email: req.body.email }, { username: req.body.email }],
-  });
+  const user = await User.findOne({ email: req.body.email });
   if (user) {
     checkPass = await bcrypt.compare(req.body.password, user.password);
 
     if (checkPass) {
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: "10h" });
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
+        expiresIn: "10h",
+      });
+      delete user._doc.password;
       user._doc.token = token;
 
       return res.status(201).json(user);
@@ -31,7 +32,7 @@ async function signUp(req, res) {
   form.parse(req, async (err, fields, files) => {
     console.log(fields.email);
     const user = await User.findOne({
-      $or: [{ email: fields.email }, { username: fields.username }],
+      email: fields.email,
     });
 
     if (user) {
@@ -43,25 +44,25 @@ async function signUp(req, res) {
       const newUser = await User.create({
         firstname: fields.firstname,
         lastname: fields.lastname,
-        username: fields.username,
         email: fields.email,
+        phone: fields.phone,
+        address: fields.address,
+        shippingAddress: fields.shippingAddress,
         password: stringifyPass.toString(),
       });
 
-      if (files.avatar) {
-        newUser.avatar = files.avatar.newFilename;
-        newUser.save();
-      }
+      
       if (newUser) {
         const user = await User.findOne({
-          $or: [{ email: newUser.email }, { username: newUser.username }],
+          email: newUser.email,
         });
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, {
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
           expiresIn: "10h",
         });
-        const userToFront = { userId: user.id, token: token, username: user.username };
+        delete user._doc.password;
+        user._doc.token = token;
 
-        return res.status(201).json(userToFront);
+        return res.status(201).json(user);
       } else {
         return res.status(502).send({ message: "User cannot be created, try later" });
       }

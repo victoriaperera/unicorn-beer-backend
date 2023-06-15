@@ -15,5 +15,5 @@ module.exports = async () => {
   ];
 
   await Product.insertMany(products);
-  console.log("[Database] Se corrió el seeder de Admin.");
+  console.log("[Database] Se corrió el seeder de Productos.");
 };

@@ -16,4 +16,4 @@ Por qué elegimos Unicornio?
 
 Qué tecnologías se utilizaron?
 
-React, Redux, MongoDB, JS, GitHub, JS, NodeJS, Figma, CSS3
+React, Redux, MongoDB, JS, GitHub, JS, NodeJS, Figma, CSS3, Bootstrap

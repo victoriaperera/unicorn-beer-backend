@@ -51,6 +51,7 @@ async function signUp(req, res) {
         password: stringifyPass.toString(),
       });
 
+      
       if (newUser) {
         const user = await User.findOne({
           email: newUser.email,

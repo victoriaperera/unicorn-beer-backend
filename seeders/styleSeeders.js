@@ -6,7 +6,7 @@ module.exports = async () => {
       name: "Scottish",
       price: "10.99",
       description:
-        " A unique and flavorful amber or brown beer with a malty character        and caramel notes. Balancing sweetness and bitterness, it offers a medium to full body with a prominent malt profile and subtle hints of toffee and nuts. Perfect for those seeking intense and full-bodied beer experiences.",
+        " A unique and flavorful amber or brown beer with a malty character and caramel notes. Balancing sweetness and bitterness, it offers a medium to full body with a prominent malt profile and subtle hints of toffee and nuts. Perfect for those seeking intense and full-bodied beer experiences.",
     },
     {
       name: "IPA",

@@ -24,7 +24,7 @@ async function store(req, res) {
     const newProduct = Product.create({
       style: fields.styleId,
       container: fields.containerId,
-      photos: files.photos,
+      photos: files.photos.newFilename,
       stock: fields.stock,
       featured: fields.featured,
     });
@@ -41,17 +41,19 @@ async function update(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        style: fields.style,
-        container: fields.container,
-        photos: files.photos,
-        stock: fields.stock,
-        featured: fields.featured,
-      },
-      { new: true },
-    );
+    const newProduct = {
+      style: fields.style,
+      container: fields.container,
+      photos: [],
+      stock: fields.stock,
+      featured: fields.featured,
+    };
+    for (photo of files.photos) {
+      newProduct.photos.push(photo.newFilename);
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, newProduct, { new: true });
+
     return res.status(201).json(product);
   });
 }

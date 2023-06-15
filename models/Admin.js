@@ -6,14 +6,13 @@ const AdminSchema = new mongoose.Schema({
   password: String,
   name: String,
 });
-// AdminSchema.set("toJSON", { virtuals: true });
 
-// AdminSchema.methods.toJSON = function () {
-//   const product = this.toObject();
-//   product.id = product._id.toString();
-//   delete product._id;
-//   return product;
-// };
+AdminSchema.methods.toJSON = function () {
+  const admin = this._doc;
+  admin.id = this._id.toString();
+  delete admin._id;
+  return JSON.parse(admin);
+};
 
 AdminSchema.pre("save", async function (next) {
   // Solo hashear la contraseña si ha sido modificada o es nueva

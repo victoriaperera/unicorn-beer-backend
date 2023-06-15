@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     ref: "Style",
   },
   price: Number,
-  container: String,
+  container: { type: Schema.Types.ObjectId, ref: "Container" },
   photos: { type: [{ type: String }] }, // Preguntar si es correcto tener todas las fotos y mostrarlas en base al container
   stock: Number,
   featured: Boolean,
@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
   },
   name: String,
 });
-// productSchema.set("toJSON", { virtuals: true });
+productSchema.set("toJSON", { virtuals: true });
 
 // productSchema.methods.toJSON = function () {
 //   const product = this.toObject();

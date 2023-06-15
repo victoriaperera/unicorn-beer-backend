@@ -51,10 +51,6 @@ async function signUp(req, res) {
         password: stringifyPass.toString(),
       });
 
-      if (files.avatar) {
-        newUser.avatar = files.avatar.newFilename;
-        newUser.save();
-      }
       if (newUser) {
         const user = await User.findOne({
           email: newUser.email,

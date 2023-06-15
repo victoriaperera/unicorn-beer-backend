@@ -11,7 +11,7 @@ AdminSchema.methods.toJSON = function () {
   const admin = this._doc;
   admin.id = this._id.toString();
   delete admin._id;
-  return JSON.parse(admin);
+  return admin;
 };
 
 AdminSchema.pre("save", async function (next) {
@@ -22,7 +22,7 @@ AdminSchema.pre("save", async function (next) {
 
   try {
     // Hashear la contraseña
-    const hashedPassword = await bcrypt.hash(this.password, 10);
+    const hashedPassword = await bcrypt.hash(this.password, 15);
 
     // Reemplazar la contraseña en texto plano por la contraseña hasheada
     this.password = hashedPassword;

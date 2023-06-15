@@ -1,5 +1,7 @@
 const { mongoose, Schema } = require("../db");
 const slugify = require("slugify");
+const Style = require("./Style");
+const Container = require("./Container");
 
 const productSchema = new mongoose.Schema({
   style: {
@@ -19,12 +21,17 @@ const productSchema = new mongoose.Schema({
 });
 productSchema.set("toJSON", { virtuals: true });
 
-// productSchema.methods.toJSON = function () {
-//   const product = this.toObject();
-//   product.id = product._id.toString();
-//   delete product._id;
-//   return product;
-// };
+productSchema.methods.setData = async function () {
+  const style = await Style.findById(this.style);
+  const container = await Container.findById(this.container);
+  const product = this._doc;
+  product.name = `${style.name} ${container.name} ${
+    container.volume * 1000 * process.env.CONVERT_ML_OZ
+  }`;
+  product.price = `${(style.price * container.volume).toFixed(2)}`;
+
+  return product;
+};
 
 productSchema.virtual("slug").get(function () {
   return slugify(this.name, {

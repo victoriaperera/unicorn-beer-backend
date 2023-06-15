@@ -6,13 +6,13 @@ module.exports = async () => {
       name: "Scottish",
       price: "10.99",
       description:
-        "Cerveza roja, clara, de cuerpo mediano. Presenta notas de malta a caramelo, ligeramente tostadas y ahumadas. De sabor dulce y terroso, otorgado por el balance de malta y lúpulos.",
+        " A unique and flavorful amber or brown beer with a malty character        and caramel notes. Balancing sweetness and bitterness, it offers a medium to full body with a prominent malt profile and subtle hints of toffee and nuts. Perfect for those seeking intense and full-bodied beer experiences.",
     },
     {
       name: "IPA",
       price: "10.99",
       description:
-        "Cerveza ámbar, clara y ligera. Las características marcantes son el amargor, los aromas y sabores cítricos y frutales a naranja, pomelo y limón, otorgados por la utilización de los lúpulos americanos.",
+        "An exceptional India Pale Ale with a golden color and captivating aroma of citrus and tropical fruits. It perfectly balances hop bitterness and malt sweetness, offering a refreshing and invigorating flavor with notes of grapefruit, pine, and resin. A bold and vibrant beer journey.",
     },
     {
       name: "Stout",

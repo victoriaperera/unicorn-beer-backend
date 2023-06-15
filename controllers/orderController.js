@@ -6,7 +6,10 @@ async function index(req, res) {
   return res.json(orders);
 }
 
-async function show(req, res) {}
+async function show(req, res) {
+  const order = await Order.findById(req.body.orderId);
+  return res.json(order);
+}
 
 async function store(req, res) {}
 

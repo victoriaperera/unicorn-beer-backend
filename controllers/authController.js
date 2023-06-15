@@ -32,7 +32,7 @@ async function signUp(req, res) {
   form.parse(req, async (err, fields, files) => {
     console.log(fields.email);
     const user = await User.findOne({
-      $or: [{ email: fields.email }, { username: fields.username }],
+      email: fields.email,
     });
 
     if (user) {

@@ -1,10 +1,7 @@
 **Bitácora**
 
 Marco del proyecto:
-Unicorn Beer it's an app developed under the MERN stack as a final project of a Cooding Bootcamp at Hack Academy, an educational institution specialized in programing courses. The Bootcamp it's an inmersive and intesive full-time course, with three months of duration and 600 hs. of workload.
-Has for committed prepare professionals as Jr. Full Stack Developers.
-This final project pretends (poner a punto) all the acquired knowledge at the employment of diverse technologies.
-Unicorn Beer was developed during three weeks by five students using approximately 700 Hs.
+Unicorn Beer is an app developed using the MERN stack as the final project of a Coding Bootcamp at Hack Academy, an educational institution specializing in programming courses. The Bootcamp is an immersive and intensive full-time course that lasts for three months and requires a workload of 600 hours. Its goal is to prepare its students to be Junior Full Stack Developers. This final project aims to showcase the application of the diverse technologies learned throughout the Bootcamp. Unicorn Beer was developed over a period of three weeks by a team of five students, totaling approximately 700 hours of work.
 
 Unicron Beer es una app realizada under the  stack como proyecto final de un Coding Bootcamp en Hack Academy, una institución educacional especializada en cursos de programación. El Bootcamp es un curso intensivo e inmersivo de tiempo completo, de tres meses de duración con una carga horaria total de más de 600 Hs. Tiene por cometido preparar a personas como Full Stack Developers Jr.
 El proyecto final busca poner a punto todos los conocimientos adquiridos utilizando diversas tecnologías.

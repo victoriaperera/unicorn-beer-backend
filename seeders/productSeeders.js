@@ -94,6 +94,36 @@ module.exports = async () => {
       stock: 200,
       featured: false,
     },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
+    {
+      photos: [],
+      stock: 200,
+      featured: false,
+    },
   ];
 
   const styles = await Style.find();

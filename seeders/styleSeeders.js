@@ -32,6 +32,18 @@ module.exports = async () => {
       description:
         "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
     },
+    {
+      name: "ZERO",
+      price: 10.99,
+      description:
+        "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
+    },
+    {
+      name: "Pilsener",
+      price: 10.99,
+      description:
+        "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
+    }
   ];
 
   await Style.insertMany(styles);

@@ -5,6 +5,7 @@ const StyleSchema = new mongoose.Schema({
   description: String,
   price: Number,
   photos: [],
+  abv: Number,
 });
 StyleSchema.set("toJSON", { virtuals: true });
 

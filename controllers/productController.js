@@ -48,8 +48,12 @@ async function update(req, res) {
       stock: fields.stock,
       featured: fields.featured,
     };
-    for (photo of files.photos) {
-      newProduct.photos.push(photo.newFilename);
+    if (files.photos.length >= 1) {
+      for (photo of files.photos) {
+        newProduct.photos.push(photo.newFilename);
+      }
+    } else {
+      newProduct.photos.push(files.photos.newFilename);
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, newProduct, { new: true });

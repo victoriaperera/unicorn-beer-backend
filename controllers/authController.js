@@ -23,7 +23,7 @@ async function login(req, res) {
 
 async function signUp(req, res) {
   const user = await User.findOne({
-    email: req.params.email,
+    email: req.body.email,
   });
 
   if (user) {

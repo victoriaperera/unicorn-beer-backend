@@ -60,7 +60,6 @@ async function signUp(req, res) {
 
 async function logOut(req, res) {
   res.clearCookie("token");
-  console.log("logged out successfully");
   res.json({ message: "Logged out successfully" });
 }
 

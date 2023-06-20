@@ -14,7 +14,6 @@ async function show(req, res) {
 
 async function store(req, res) {
   try {
-    
     const order = await Order.create({
       user: req.auth.id,
       products: req.body.products,
@@ -23,9 +22,7 @@ async function store(req, res) {
       paymentMethod: req.body.paymentMethod,
     });
     for(const product of req.body.products) {
-      const productToU = await Product.findById(product)
-      productToU.stock = product.stock - product.quantity
-      await productToU.save();
+      await Product.findByIdAndUpdate(product.id, {stock: product.stock - product.quantity})
     }
     return res.status(201).json(order);
   } catch(err) {

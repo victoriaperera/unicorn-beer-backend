@@ -9,7 +9,7 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-  const product = await Product.findById(req.body.id).populate("container").populate("style");
+  const product = await Product.findById(req.params.id).populate("container").populate("style");
 
   return res.json(product);
 }

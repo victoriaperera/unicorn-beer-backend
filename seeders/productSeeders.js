@@ -120,11 +120,19 @@ module.exports = async () => {
 
     products[i].style = styles[styleIndex]._id;
     products[i].container = containers[containerIndex]._id;
-    products[i].name = `${styles[styleIndex].name} ${containers[containerIndex].name} ${(
-      containers[containerIndex].volume *
-      1000 *
-      process.env.CONVERT_ML_OZ
-    ).toFixed(2)} Oz`;
+    if (container.name === "keg") {
+      products[i].name = `${styles[styleIndex].name} ${containers[containerIndex].name} ${(
+        containers[containerIndex].volume *
+        1000 *
+        process.env.CONVERT_ML_GAL
+      ).toFixed(2)} Gal`;
+    } else {
+      products[i].name = `${styles[styleIndex].name} ${containers[containerIndex].name} ${(
+        containers[containerIndex].volume *
+        1000 *
+        process.env.CONVERT_ML_GAL
+      ).toFixed(2)} Oz`;
+    }
     products[i].price = `${(styles[styleIndex].price * containers[containerIndex].volume).toFixed(
       2,
     )}`;

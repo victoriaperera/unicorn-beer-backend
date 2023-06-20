@@ -3,9 +3,13 @@ const Product = require("../models/Product");
 const formidable = require("formidable");
 
 async function index(req, res) {
-  const products = await Product.find().populate("container").populate("style");
+  try {
+    const products = await Product.find().populate("container").populate("style");
 
-  return res.json(products);
+    return res.json(products);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function show(req, res) {

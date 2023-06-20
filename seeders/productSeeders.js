@@ -120,7 +120,7 @@ module.exports = async () => {
 
     products[i].style = styles[styleIndex]._id;
     products[i].container = containers[containerIndex]._id;
-    if (container.name === "keg") {
+    if (containers[containerIndex].name === "keg") {
       products[i].name = `${styles[styleIndex].name} ${containers[containerIndex].name} ${(
         containers[containerIndex].volume *
         1000 *

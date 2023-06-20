@@ -1,4 +1,5 @@
 const Order = require("../models/Order");
+const Product = require("../models/Product");
 
 async function index(req, res) {
   const orders = await Order.find();
@@ -12,15 +13,26 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  const order = await Order.create({
-    user: req.auth.id,
-    products: req.body.products,
-    totalAmount: req.body.totalAmount,
-    status: req.body.status,
-    paymentMethod: req.body.paymentMethod,
-  });
+  try {
+    
+    const order = await Order.create({
+      user: req.auth.id,
+      products: req.body.products,
+      totalAmount: req.body.totalAmount,
+      status: req.body.status,
+      paymentMethod: req.body.paymentMethod,
+    });
+    for(const product of req.body.products) {
+      const productToU = await Product.findById(product)
+      productToU.stock = product.stock - product.quantity
+      await productToU.save();
+    }
+    return res.status(201).json(order);
+  } catch(err) {
+    console.log(err)
+    return res.status(400).json(err)
+  }
 
-  return res.status(201).json(order);
 }
 
 async function update(req, res) {

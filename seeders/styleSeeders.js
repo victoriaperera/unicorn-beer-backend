@@ -44,7 +44,7 @@ module.exports = async () => {
       name: "Stout",
       price: 10.99,
       description:
-        "Cerveza negra, con buena formación de espuma. Presenta aromas y sabores de malta tostada a café y cítricos a lúpulo americano. El final es seco y de amargor creciente.",
+        "A rich and dark beer with robust flavors of roasted malt and hints of coffee and hops, culminating in a satisfyingly dry and bitter finish.",
       abv: 5.5,
       photos: [
         "STOUT_bottle-1.jpg",
@@ -63,7 +63,7 @@ module.exports = async () => {
       name: "Blonde",
       price: 10.99,
       description:
-        "Cerveza rubia clara, refrescante y altamente bebible. La mezcla de levaduras Ale y Lager hacen que esta cerveza sea muy ligera y agradable en el paladar.",
+        "A light and refreshing beer with a crisp and smooth flavor profile, showcasing a delicate balance of malty sweetness and a touch of hoppy bitterness, perfect for easy enjoyment.",
       abv: 5.2,
       photos: [
         "BLONDE_bottle-1.jpg",
@@ -82,7 +82,7 @@ module.exports = async () => {
       name: "APA",
       price: 10.99,
       description:
-        "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
+        "An inviting golden beer with a burst of complex fruity aromas and flavors, offering a medium body and creamy texture, while the subtle warmth of alcohol adds to its overall pleasantness.",
       abv: 6,
       photos: [
         "APA_bottle-1.jpg",
@@ -101,7 +101,7 @@ module.exports = async () => {
       name: "ZERO",
       price: 10.99,
       description:
-        "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
+        "A crisp and refreshing golden beer, carefully crafted to retain the classic characteristics of a traditional lager, offering a clean and satisfying taste without the presence of alcohol.",
       abv: 0,
 
       photos: [
@@ -121,7 +121,7 @@ module.exports = async () => {
       name: "Pilsener",
       price: 10.99,
       description:
-        "Cerveza dorada y clara, que presenta notas frutales complejas en el aroma y sabor. De cuerpo mediano, posee buena cremosidad. El alcohol brinda un agradable calentamiento en la garganta.",
+        "A clear and golden beer with a delightful interplay of complex fruity notes, offering a medium body, smooth creaminess, and a pleasant warming sensation from the alcohol, creating a truly enjoyable drinking experience.",
       abv: 5,
       photos: [
         "PILSENER_bottle-1.jpg",

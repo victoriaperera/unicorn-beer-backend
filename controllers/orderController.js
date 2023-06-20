@@ -12,15 +12,20 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  const order = await Order.create({
-    user: req.auth.id,
-    products: req.body.products,
-    totalAmount: req.body.totalAmount,
-    status: req.body.status,
-    paymentMethod: req.body.paymentMethod,
-  });
+  try {
+    console.log(req.body.products)
+    const order = await Order.create({
+      user: req.auth.id,
+      products: req.body.products,
+      totalAmount: req.body.totalAmount,
+      status: req.body.status,
+      paymentMethod: req.body.paymentMethod,
+    });
+    return res.status(201).json(order);
+  } catch(err) {
+    return res.status(400).json(err)
+  }
 
-  return res.status(201).json(order);
 }
 
 async function update(req, res) {

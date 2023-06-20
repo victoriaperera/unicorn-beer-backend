@@ -25,9 +25,15 @@ productSchema.methods.setData = async function () {
   const style = await Style.findById(this.style);
   const container = await Container.findById(this.container);
   const product = this._doc;
-  product.name = `${style.name} ${container.name} ${
-    container.volume * 1000 * process.env.CONVERT_ML_OZ
-  }`;
+  if (container.name === "keg") {
+    product.name = `${style.name} ${container.name} ${
+      container.volume * 1000 * process.env.CONVERT_ML_GAL
+    }`;
+  } else {
+    product.name = `${style.name} ${container.name} ${
+      container.volume * 1000 * process.env.CONVERT_ML_OZ
+    }`;
+  }
   product.price = `${(style.price * container.volume).toFixed(2)}`;
 
   return product;

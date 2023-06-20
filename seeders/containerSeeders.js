@@ -3,15 +3,15 @@ const Container = require("../models/Container");
 module.exports = async () => {
   const containers = [
     {
-      name: "Bottle",
+      name: "bottle",
       volume: 0.5,
     },
     {
-      name: "Can",
+      name: "can",
       volume: 0.33,
     },
     {
-      name: "Barrel",
+      name: "keg",
       volume: 5,
     },
   ];

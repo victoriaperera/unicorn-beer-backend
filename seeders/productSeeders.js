@@ -109,7 +109,6 @@ module.exports = async () => {
       stock: 200,
       featured: false,
     },
-    
   ];
 
   const styles = await Style.find();
@@ -129,8 +128,6 @@ module.exports = async () => {
     products[i].price = `${(styles[styleIndex].price * containers[containerIndex].volume).toFixed(
       2,
     )}`;
-    products[i].photos.push("5dbdf0224df0930f778771500.png");
-    products[i].photos.push("5dbdf0224df0930f778771501.png");
   }
 
   await Product.insertMany(products);

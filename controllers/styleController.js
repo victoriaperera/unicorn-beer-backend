@@ -1,4 +1,5 @@
 const Style = require("../models/Style");
+const formidable = require("formidable");
 
 async function index(req, res) {
   const styles = await Style.find();
@@ -17,8 +18,18 @@ async function store(req, res) {
       name: fields.name,
       description: fields.description,
       price: fields.price,
-      photos: files.photos,
+      photos: [],
     });
+
+    if (files.photos !== undefined) {
+      if (Array.isArray(files.photos)) {
+        for (const photo of files.photos) {
+          style.photos.push(photo.originalFilename);
+        }
+      } else {
+        style.photos.push(files.photos.originalFilename);
+      }
+    }
 
     style
       ? res.status(201).json(style)
@@ -31,19 +42,37 @@ async function update(req, res) {
     multiples: true,
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
+    filename: (name, ext, part, form) => {
+      return `${part.originalFilename}`; // Will be joined with options.uploadDir.
+    },
   });
-  form.parse(req, async (err, fields, files) => {
-    const style = await Style.findByIdAndUpdate(
-      req.body.styleId,
-      {
-        name: fields.name,
-        description: fields.description,
-        photos: files.photos,
-      },
-      { new: true },
-    );
 
-    return res.status(202).json(style);
+  form.parse(req, async (err, fields, files) => {
+    const style = await Style.findById(req.params.id);
+    const newStyle = {
+      name: fields.name,
+      description: fields.description,
+      price: fields.price,
+      photos: [],
+    };
+
+    if (Array.isArray(style.photos)) {
+      newStyle.photos.push(...style.photos);
+    }
+
+    if (files.photos !== undefined) {
+      if (Array.isArray(files.photos)) {
+        for (const photo of files.photos) {
+          newStyle.photos.push(photo.originalFilename);
+        }
+      } else {
+        newStyle.photos.push(files.photos.originalFilename);
+      }
+    }
+
+    const updatedStyle = await Style.findByIdAndUpdate(req.params.id, newStyle, { new: true });
+
+    return res.status(202).json(updatedStyle);
   });
 }
 

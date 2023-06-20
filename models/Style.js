@@ -4,7 +4,7 @@ const StyleSchema = new mongoose.Schema({
   name: String,
   description: String,
   price: Number,
-  photos: [],
+  photos: { type: [{ type: String }] },
   abv: Number,
 });
 StyleSchema.set("toJSON", { virtuals: true });

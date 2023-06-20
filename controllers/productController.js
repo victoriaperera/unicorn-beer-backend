@@ -20,14 +20,25 @@ async function store(req, res) {
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
   });
+
   form.parse(req, async (err, fields, files) => {
     const newProduct = Product.create({
       style: fields.styleId,
       container: fields.containerId,
-      photos: files.photos.newFilename,
+      photos: [],
       stock: fields.stock,
       featured: fields.featured,
     });
+
+    if (files.photos !== undefined) {
+      if (Array.isArray(files.photos)) {
+        for (const photo of files.photos) {
+          newProduct.photos.push(photo.originalFilename);
+        }
+      } else {
+        newProduct.photos.push(files.photos.originalFilename);
+      }
+    }
 
     return res.status(201).json(newProduct);
   });
@@ -41,6 +52,7 @@ async function update(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
+    const product = await Product.findById(req.params.id);
     const newProduct = {
       style: fields.style,
       container: fields.container,
@@ -48,17 +60,24 @@ async function update(req, res) {
       stock: fields.stock,
       featured: fields.featured,
     };
-    if (files.photos.length >= 1) {
-      for (photo of files.photos) {
-        newProduct.photos.push(photo.newFilename);
+
+    newProduct.photos.push(...product.photos);
+
+    if (files.photos !== undefined) {
+      if (Array.isArray(files.photos)) {
+        for (const photo of files.photos) {
+          newProduct.photos.push(photo.originalFilename);
+        }
+      } else {
+        newProduct.photos.push(files.photos.originalFilename);
       }
-    } else {
-      newProduct.photos.push(files.photos.newFilename);
     }
 
-    const product = await Product.findByIdAndUpdate(req.params.id, newProduct, { new: true });
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, newProduct, {
+      new: true,
+    });
 
-    return res.status(201).json(product);
+    return res.status(201).json(updatedProduct);
   });
 }
 

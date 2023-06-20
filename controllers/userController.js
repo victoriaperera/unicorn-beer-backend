@@ -1,10 +1,22 @@
 const User = require("../models/User");
 
 async function index(req, res) {
-  console.log(req.body.email);
-  const user = await User.findOne({ email: req.body.email }).select("-password");
+  try {
+    const users = await User.find().select("-password");
+    return res.status(200).json(users);
+  }catch(err){
+    return res.status(401).json(err);
+  }
+  
+}
 
-  return res.status(200).json(user);
+async function show(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email }).select("-password");
+    return res.status(200).json(user);
+  } catch(err) {
+    return res.status(401).json(err);
+  } 
 }
 
 async function store(req, res) {
@@ -47,6 +59,7 @@ async function destroy(req, res) {
 
 module.exports = {
   index,
+  show,
   store,
   update,
   destroy,

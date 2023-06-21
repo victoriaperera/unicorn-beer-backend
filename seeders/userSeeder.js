@@ -40,12 +40,18 @@ module.exports = async () => {
           }
         }
       }
+      const startDate = new Date('2023-01-01');
+      const endDate = new Date('2023-6-30');
+      const randomDate = faker.date.between(startDate, endDate);
+ 
       const order = new Order({
         user: user._id,
         products: productsArr,
         totalAmount: totalAmount,
         status: "paid",
         paymentMethod: paymentMethods[Math.floor(Math.random() * paymentMethods.length)],
+        deliveryDate: randomDate,
+        shippingDate: new Date(randomDate.getFullYear(), randomDate.getMonth(), randomDate.getDate() - 1)
       });
       await order.save();
     }

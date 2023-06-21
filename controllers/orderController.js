@@ -13,6 +13,7 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
+  console.log(req.auth);
   try {
     const order = await Order.create({
       user: req.auth.id,
@@ -21,11 +22,11 @@ async function store(req, res) {
       status: req.body.status,
       paymentMethod: req.body.paymentMethod,
       deliveryDate: req.body.deliveryDate,
-      shippingDate: req.body.shippingDate
+      shippingDate: req.body.shippingDate,
     });
     for (const product of req.body.products) {
       await Product.findByIdAndUpdate(product.id, {
-        stock: product.product.stock - product.productQuantity,
+        stock: product.stock - product.quantity,
       });
     }
     return res.status(201).json(order);

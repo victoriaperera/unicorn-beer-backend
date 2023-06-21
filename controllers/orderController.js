@@ -2,7 +2,7 @@ const Order = require("../models/Order");
 const Product = require("../models/Product");
 
 async function index(req, res) {
-  const orders = await Order.find();
+  const orders = await Order.find().populate("products").populate("user");
 
   return res.json(orders);
 }
@@ -21,15 +21,16 @@ async function store(req, res) {
       status: req.body.status,
       paymentMethod: req.body.paymentMethod,
     });
-    for(const product of req.body.products) {
-      await Product.findByIdAndUpdate(product.id, {stock: product.stock - product.quantity})
+    for (const product of req.body.products) {
+      await Product.findByIdAndUpdate(product.id, {
+        stock: product.stock - product.productQuantity,
+      });
     }
     return res.status(201).json(order);
-  } catch(err) {
-    console.log(err)
-    return res.status(400).json(err)
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
-
 }
 
 async function update(req, res) {
@@ -47,7 +48,7 @@ async function update(req, res) {
 }
 async function destroy(req, res) {
   const order = await Order.findByIdAndDelete(req.body.orderId);
-  return res.status(200).send({message: "Order deleted"})
+  return res.status(200).send({ message: "Order deleted" });
 }
 
 module.exports = {

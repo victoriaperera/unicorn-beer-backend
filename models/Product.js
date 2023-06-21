@@ -10,7 +10,6 @@ const productSchema = new mongoose.Schema({
   },
   price: Number,
   container: { type: Schema.Types.ObjectId, ref: "Container" },
-  photos: { type: [{ type: String }] },
   stock: Number,
   featured: Boolean,
   updatedAt: {

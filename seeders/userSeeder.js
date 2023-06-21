@@ -11,7 +11,7 @@ module.exports = async () => {
   const productsArr = [];
   paymentMethods = ["Visa", "Mastercard", "Paypal"];
 
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 10; i++) {
     users.push(
       new User({
         firstname: faker.name.firstName(),
@@ -30,7 +30,6 @@ module.exports = async () => {
 
     if (Math.random() > 0.5 ? 1 : 0) {
       for (const product of products) {
-        console.log(totalAmount);
         if (Math.random() > 0.5 ? 1 : 0) {
           const productQuantity = Math.floor(Math.random() * 5);
           if (productQuantity > 0) {

@@ -87,8 +87,8 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   try{
-    console.log(req.body)
-   // await Product.findByIdAndDelete(req.body.id);
+    const product = await Product.findById(req.body.productId);
+    await product.delete();
     return res.status(200).send({ message: "Product deleted" });
   }catch(err){
     return res.status(404).send({message: "Todo mal"})

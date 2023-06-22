@@ -1,5 +1,6 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const { sendEmail } = require("../middlewares/sendMailOrders");
 
 async function index(req, res) {
   const orders = await Order.find().populate("products").populate("user");
@@ -13,12 +14,13 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  console.log(req.auth);
+  const updated = false;
   try {
     const order = await Order.create({
       user: req.auth.id,
       products: req.body.products,
       totalAmount: req.body.totalAmount,
+      totalQuantity: req.body.totalQuantity,
       status: req.body.status,
       paymentMethod: req.body.paymentMethod,
       deliveryDate: req.body.deliveryDate,
@@ -29,6 +31,7 @@ async function store(req, res) {
         stock: product.stock - product.quantity,
       });
     }
+    // sendEmail(order, updated);
     return res.status(201).json(order);
   } catch (err) {
     console.log(err);
@@ -37,18 +40,24 @@ async function store(req, res) {
 }
 
 async function update(req, res) {
+  const updated = true;
   const order = await Order.findByIdAndUpdate(
     req.body.orderId,
     {
       products: req.body.products,
       totalAmount: req.body.totalAmount,
+      totalQuantity: req.body.totalQuantity,
       status: req.body.status,
       paymentMethod: req.body.paymentMethod,
+      deliveryDate: req.body.deliveryDate,
+      shippingDate: req.body.shippingDate,
     },
     { new: true },
   );
+  // sendEmail(order, updated)
   return res.status(209).json(order);
 }
+
 async function destroy(req, res) {
   const order = await Order.findByIdAndDelete(req.body.orderId);
   return res.status(200).send({ message: "Order deleted" });

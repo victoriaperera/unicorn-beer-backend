@@ -1,4 +1,5 @@
 const Style = require("../models/Style");
+const Product = require("../models/Product");
 const formidable = require("formidable");
 
 async function index(req, res) {
@@ -77,8 +78,13 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  await Style.findByIdAndDelete(req.params.id);
-  return res.status(200).send({ message: "Style deleted" });
+  const style = await Style.findByIdAndDelete(req.params.id);
+  const products = await Product.find({ style: style });
+  for (const product of products) {
+    await Product.findByIdAndDelete(product._id);
+  }
+
+  return res.status(200).send({ message: "Style and its products deleted" });
 }
 
 module.exports = {

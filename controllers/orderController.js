@@ -13,7 +13,6 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  console.log(req.auth);
   try {
     const order = await Order.create({
       user: req.auth.id,

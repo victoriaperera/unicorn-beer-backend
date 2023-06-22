@@ -86,8 +86,13 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  await Product.findByIdAndDelete(req.body.id);
-  return res.status(200).send({ message: "Product deleted" });
+  try{
+    console.log(req.body)
+   // await Product.findByIdAndDelete(req.body.id);
+    return res.status(200).send({ message: "Product deleted" });
+  }catch(err){
+    return res.status(404).send({message: "Todo mal"})
+  }
 }
 
 module.exports = {

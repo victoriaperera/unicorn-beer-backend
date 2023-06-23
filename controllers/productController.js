@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
-
+const Container = require("../models/Container");
+const Style = require("../models/Style");
 const formidable = require("formidable");
 
 async function index(req, res) {
@@ -7,8 +8,8 @@ async function index(req, res) {
     const products = await Product.find().populate("container").populate("style");
 
     return res.json(products);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(400).json(err)
   }
 }
 
@@ -18,12 +19,12 @@ async function show(req, res) {
   return res.json(product);
 }
 
-async function store(req, res) {
+async function storeViejo(req, res) {
   const form = formidable({
     multiples: true,
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
-  });
+});
 
   form.parse(req, async (err, fields, files) => {
     const newProduct = Product.create({
@@ -46,6 +47,23 @@ async function store(req, res) {
 
     return res.status(201).json(newProduct);
   });
+}
+
+async function store(req, res) {
+  try{
+    const container = await Container.findOne({name: req.body.container}, "_id");
+    const style = await Style.findOne({name: req.body.style})
+    const newProduct = await Product.create({
+      style: style.id,
+      container: container,
+      price: req.body.price,
+      stock: req.body.stock,
+      name: req.body.name
+    })
+  return res.status(200).json(newProduct);
+  }catch(err){
+    res.status(400).json(err)
+  }
 }
 
 async function update(req, res) {

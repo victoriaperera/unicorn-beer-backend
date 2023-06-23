@@ -48,25 +48,7 @@ async function storeViejo(req, res) {
     return res.status(201).json(newProduct);
   });
 }
-
-async function store(req, res) {
-  try{
-    const container = await Container.findOne({name: req.body.container}, "_id");
-    const style = await Style.findOne({name: req.body.style})
-    const newProduct = await Product.create({
-      style: style.id,
-      container: container,
-      price: req.body.price,
-      stock: req.body.stock,
-      name: req.body.name
-    })
-  return res.status(200).json(newProduct);
-  }catch(err){
-    res.status(400).json(err)
-  }
-}
-
-async function update(req, res) {
+async function updateViejo(req, res) {
   const form = formidable({
     multiples: true,
     uploadDir: __dirname + "/../public/img",
@@ -102,6 +84,39 @@ async function update(req, res) {
     return res.status(201).json(updatedProduct);
   });
 }
+
+async function store(req, res) {
+  try{
+    const container = await Container.findOne({name: req.body.container}, "_id");
+    const style = await Style.findOne({name: req.body.style})
+ 
+    const newProduct = await Product.create({
+      style: style.id,
+      container: container,
+      price: req.body.price,
+      stock: req.body.stock,
+      name: req.body.name
+    })
+    const product = await Product.find(newProduct).populate("container", "name").populate("style", "name")
+    console.log(product)
+  return res.status(200).json(product);
+  }catch(err){
+    res.status(400).json(err)
+  }
+}
+
+async function update(req, res) {
+  try{
+    const product = await Product.findByIdAndUpdate( req.body.productId, {
+      stock: req.body.stock
+    })
+    res.status(201).json(product)
+  }catch(err){
+    res.status(404).json(err)
+  }
+}
+
+
 
 async function destroy(req, res) {
   try{

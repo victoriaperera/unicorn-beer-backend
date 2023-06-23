@@ -7,10 +7,10 @@ const containerSchema = new mongoose.Schema({
 containerSchema.set("toJSON", { virtuals: true });
 
 // containerSchema.methods.toJSON = function () {
-//   const product = this.toObject();
-//   product.id = product._id.toString();
-//   delete product._id;
-//   return product;
+//   const container = this._doc;
+//   container.id = container._id.toString();
+
+//   return container;
 // };
 
 module.exports = mongoose.model("Container", containerSchema);

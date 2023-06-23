@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 const formidable = require("formidable");
 
 async function index(req, res) {
-  const styles = await Style.find();
+  const styles = await Style.find().populate("containers");
 
   return res.json(styles);
 }

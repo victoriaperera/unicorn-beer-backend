@@ -1,12 +1,13 @@
-const { mongoose } = require("../db");
+const { mongoose, Schema } = require("../db");
 
-const StyleSchema = new mongoose.Schema({
+const styleSchema = new mongoose.Schema({
   name: String,
   description: String,
   price: Number,
   photos: [],
   abv: Number,
+  containers: [],
 });
-StyleSchema.set("toJSON", { virtuals: true });
+styleSchema.set("toJSON", { virtuals: true });
 
-module.exports = mongoose.model("Style", StyleSchema);
+module.exports = mongoose.model("Style", styleSchema);

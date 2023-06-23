@@ -1,3 +1,4 @@
+const Container = require("../models/Container");
 const Style = require("../models/Style");
 
 module.exports = async () => {
@@ -137,6 +138,12 @@ module.exports = async () => {
       ],
     },
   ];
+
+  const containers = await Container.find();
+
+  for (const style of styles) {
+    style.containers = containers;
+  }
 
   await Style.insertMany(styles);
   console.log("[Database] Se corrió el seeder de Style.");

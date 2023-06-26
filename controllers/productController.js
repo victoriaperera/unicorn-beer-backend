@@ -9,7 +9,7 @@ async function index(req, res) {
 
     return res.json(products);
   } catch (err) {
-    res.status(400).json(err)
+    res.status(400).json(err);
   }
 }
 
@@ -24,7 +24,7 @@ async function storeViejo(req, res) {
     multiples: true,
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
-});
+  });
 
   form.parse(req, async (err, fields, files) => {
     const newProduct = Product.create({
@@ -50,45 +50,45 @@ async function storeViejo(req, res) {
 }
 
 async function store(req, res) {
-  try{
-    const container = await Container.findOne({name: req.body.container}, "_id");
-    const style = await Style.findOne({name: req.body.style})
- 
+  try {
+    const container = await Container.findOne({ name: req.body.container }, "_id");
+    const style = await Style.findOne({ name: req.body.style });
+
     const newProduct = await Product.create({
       style: style.id,
       container: container,
       price: req.body.price,
       stock: req.body.stock,
-      name: req.body.name
-    })
-    const product = await Product.find(newProduct).populate("container", "name").populate("style", "name") // TODO
-  return res.status(200).json(product);
-  }catch(err){
-    res.status(400).json(err)
+      name: req.body.name,
+    });
+    const product = await Product.find(newProduct)
+      .populate("container", "name")
+      .populate("style", "name"); // TODO
+    return res.status(200).json(product);
+  } catch (err) {
+    res.status(400).json(err);
   }
 }
 
 async function update(req, res) {
-  try{
-    const product = await Product.findByIdAndUpdate( req.body.productId, {
+  try {
+    const product = await Product.findByIdAndUpdate(req.body.productId, {
       stock: req.body.stock,
-      price: req.body.price
-    })
-    res.status(201).json(product)
-  }catch(err){
-    res.status(404).json(err)
+      price: req.body.price,
+    });
+    res.status(201).json(product);
+  } catch (err) {
+    res.status(404).json(err);
   }
 }
 
-
-
 async function destroy(req, res) {
-  try{
+  try {
     const product = await Product.findById(req.body.productId);
     await product.delete();
     return res.status(200).send({ message: "Product deleted" });
-  }catch(err){
-    return res.status(404).send({message: "Todo mal"})
+  } catch (err) {
+    return res.status(404).send({ message: "Something went wrong, try again later" });
   }
 }
 

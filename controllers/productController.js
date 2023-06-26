@@ -48,42 +48,6 @@ async function storeViejo(req, res) {
     return res.status(201).json(newProduct);
   });
 }
-async function updateViejo(req, res) {
-  const form = formidable({
-    multiples: true,
-    uploadDir: __dirname + "/../public/img",
-    keepExtensions: true,
-  });
-
-  form.parse(req, async (err, fields, files) => {
-    const product = await Product.findById(req.params.id);
-    const newProduct = {
-      style: fields.style,
-      container: fields.container,
-      photos: [],
-      stock: fields.stock,
-      featured: fields.featured,
-    };
-
-    newProduct.photos.push(...product.photos);
-
-    if (files.photos !== undefined) {
-      if (Array.isArray(files.photos)) {
-        for (const photo of files.photos) {
-          newProduct.photos.push(photo.originalFilename);
-        }
-      } else {
-        newProduct.photos.push(files.photos.originalFilename);
-      }
-    }
-
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, newProduct, {
-      new: true,
-    });
-
-    return res.status(201).json(updatedProduct);
-  });
-}
 
 async function store(req, res) {
   try{
@@ -97,8 +61,7 @@ async function store(req, res) {
       stock: req.body.stock,
       name: req.body.name
     })
-    const product = await Product.find(newProduct).populate("container", "name").populate("style", "name")
-    console.log(product)
+    const product = await Product.find(newProduct).populate("container", "name").populate("style", "name") // TODO
   return res.status(200).json(product);
   }catch(err){
     res.status(400).json(err)
@@ -108,7 +71,8 @@ async function store(req, res) {
 async function update(req, res) {
   try{
     const product = await Product.findByIdAndUpdate( req.body.productId, {
-      stock: req.body.stock
+      stock: req.body.stock,
+      price: req.body.price
     })
     res.status(201).json(product)
   }catch(err){

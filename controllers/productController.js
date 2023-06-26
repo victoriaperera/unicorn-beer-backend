@@ -1,7 +1,6 @@
 const Product = require("../models/Product");
 const Container = require("../models/Container");
 const Style = require("../models/Style");
-const formidable = require("formidable");
 
 async function index(req, res) {
   try {
@@ -17,36 +16,6 @@ async function show(req, res) {
   const product = await Product.findById(req.params.id).populate("container").populate("style");
 
   return res.json(product);
-}
-
-async function storeViejo(req, res) {
-  const form = formidable({
-    multiples: true,
-    uploadDir: __dirname + "/../public/img",
-    keepExtensions: true,
-  });
-
-  form.parse(req, async (err, fields, files) => {
-    const newProduct = Product.create({
-      style: fields.styleId,
-      container: fields.containerId,
-      photos: [],
-      stock: fields.stock,
-      featured: fields.featured,
-    });
-
-    if (files.photos !== undefined) {
-      if (Array.isArray(files.photos)) {
-        for (const photo of files.photos) {
-          newProduct.photos.push(photo.originalFilename);
-        }
-      } else {
-        newProduct.photos.push(files.photos.originalFilename);
-      }
-    }
-
-    return res.status(201).json(newProduct);
-  });
 }
 
 async function store(req, res) {

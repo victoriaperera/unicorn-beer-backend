@@ -1,5 +1,6 @@
 const Style = require("../models/Style");
 const Product = require("../models/Product");
+const Container = require("../models/Container");
 const formidable = require("formidable");
 
 async function index(req, res) {
@@ -9,16 +10,35 @@ async function index(req, res) {
 }
 
 async function store(req, res) {
+
   const form = formidable({
     multiples: true,
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
   });
   form.parse(req, async (err, fields, files) => {
+    
+    const containers = await Container.find();
+    const container = []
+    if(fields.can === "on"){
+      const can = containers.filter(type => type.name === "can");
+      container.push(...can)
+    }
+    if(fields.bottle === "on"){
+      const bottle = containers.filter(type => type.name === "bottle");
+      container.push(...bottle)
+    }
+    if(fields.keg === "on"){
+      const keg = containers.filter(type => type.name === "keg");
+      container.push(...keg)
+    }
+    
     const style = await Style.create({
       name: fields.name,
       description: fields.description,
       price: fields.price,
+      abv: fields.abv,
+      containers: container,
       photos: [],
     });
 
@@ -27,8 +47,10 @@ async function store(req, res) {
         for (const photo of files.photos) {
           style.photos.push(photo.originalFilename);
         }
+        style.save();
       } else {
         style.photos.push(files.photos.originalFilename);
+        style.save()
       }
     }
 

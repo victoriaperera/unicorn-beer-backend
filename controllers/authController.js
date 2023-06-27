@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Order = require("../models/Order");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -13,6 +14,8 @@ async function login(req, res) {
       });
       delete user._doc.password;
       user._doc.token = token;
+      const orders = await Order.find({ where: { user: user.id } });
+      user._doc.orders = orders;
 
       return res.status(201).json(user);
     }

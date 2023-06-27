@@ -75,6 +75,7 @@ async function update(req, res) {
       description: fields.description,
       price: fields.price,
       photos: [],
+      abv: fields.abv,
     };
 
     if (Array.isArray(style.photos)) {

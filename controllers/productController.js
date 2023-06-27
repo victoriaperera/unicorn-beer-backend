@@ -23,32 +23,30 @@ async function store(req, res) {
     const container = await Container.findById(req.body.container);
     const style = await Style.findById(req.body.style);
     let name = ``;
-    if(container.name === "keg"){
-      name =  `${style.name} ${container.name} ${(
+    if (container.name === "keg") {
+      name = `${style.name} ${container.name} ${(
         container.volume *
         1000 *
         process.env.CONVERT_ML_GAL
-      ).toFixed(2)} Gal`
+      ).toFixed(2)} Gal`;
     } else {
-      name =  `${style.name} ${container.name} ${(
+      name = `${style.name} ${container.name} ${(
         container.volume *
         1000 *
         process.env.CONVERT_ML_OZ
-      ).toFixed(2)} Oz`
+      ).toFixed(2)} Oz`;
     }
-    const price = `${(style.price * container.volume).toFixed(2)}`
-    
+    const price = `${(style.price * container.volume).toFixed(2)}`;
+
     const newProduct = await Product.create({
       style: style,
       container: container,
       stock: req.body.stock,
       featured: req.body.featured,
       name: name,
-      price: price
+      price: price,
     });
-    const product = await Product.find(newProduct)
-      .populate("container")
-      .populate("style"); // TODO
+    const product = await Product.findOne(newProduct).populate("container").populate("style"); // TODO
     return res.status(200).json(product);
   } catch (err) {
     res.status(400).json(err);

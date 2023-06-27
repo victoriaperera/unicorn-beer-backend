@@ -39,7 +39,7 @@ async function store(req, res) {
 
 async function update(req, res) {
   const user = await User.findByIdAndUpdate(
-    req.body.id,
+    req.auth.id,
     {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
@@ -55,7 +55,7 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  await User.findByIdAndDelete(req.body.id);
+  await User.findByIdAndDelete(req.body.userId);
   res.status(200).json("Se ha borrado el usuario correctamente");
 }
 

@@ -10,29 +10,27 @@ async function index(req, res) {
 }
 
 async function store(req, res) {
-
   const form = formidable({
     multiples: true,
     uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
   });
   form.parse(req, async (err, fields, files) => {
-    
     const containers = await Container.find();
-    const container = []
-    if(fields.can === "on"){
-      const can = containers.filter(type => type.name === "can");
-      container.push(...can)
+    const container = [];
+    if (fields.can === "on") {
+      const can = containers.filter((type) => type.name === "can");
+      container.push(...can);
     }
-    if(fields.bottle === "on"){
-      const bottle = containers.filter(type => type.name === "bottle");
-      container.push(...bottle)
+    if (fields.bottle === "on") {
+      const bottle = containers.filter((type) => type.name === "bottle");
+      container.push(...bottle);
     }
-    if(fields.keg === "on"){
-      const keg = containers.filter(type => type.name === "keg");
-      container.push(...keg)
+    if (fields.keg === "on") {
+      const keg = containers.filter((type) => type.name === "keg");
+      container.push(...keg);
     }
-    
+
     const style = await Style.create({
       name: fields.name,
       description: fields.description,
@@ -50,7 +48,7 @@ async function store(req, res) {
         style.save();
       } else {
         style.photos.push(files.photos.originalFilename);
-        style.save()
+        style.save();
       }
     }
 
@@ -100,8 +98,8 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  const style = await Style.findByIdAndDelete(req.params.id);
-  const products = await Product.find({ style: style });
+  const style = await Style.findByIdAndDelete(req.body.styleId);
+  const products = await Product.find({ style: style._id });
   for (const product of products) {
     await Product.findByIdAndDelete(product._id);
   }

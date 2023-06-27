@@ -15,7 +15,7 @@ async function login(req, res) {
       delete user._doc.password;
       user._doc.token = token;
 
-      const orders = await Order.find({ user: user._id });
+      const orders = await Order.find({ user: user._id }).sort({ createdAt: -1 });
       user._doc.orders = orders;
       console.log(orders);
 

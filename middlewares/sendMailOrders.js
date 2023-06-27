@@ -7,7 +7,7 @@ const sendEmail = (order, updated) => {
     to: [
       "nicomar2004@gmail.com",
       "mvperera@gmail.com",
-      "lorec.rincon@gmail.com, estebanc_b@hotmail.com, noahsugliano@gmail.com",
+      "lorec.rincon@gmail.com", "estebanc_b@hotmail.com", "noahsugliano@gmail.com",
     ],
     from: "unicorn.craftbeer@gmail.com",
     subject: `There is ${updated ? "a new order dispatched" : "an update"} on order N°${order.id}`,

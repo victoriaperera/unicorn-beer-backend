@@ -13,7 +13,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email }).select("-password");
-    const orders = await Order.find({ where: { user: req.auth.userId } });
+    const orders = await Order.find({ user: req.auth.userId });
     user.orders = orders;
     return res.status(200).json(user);
   } catch (err) {

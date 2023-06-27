@@ -11,7 +11,7 @@ router.post(
   productController.store,
 );
 router.patch(
-  "/",
+  "/:id",
   checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
   productController.update,
 );

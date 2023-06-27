@@ -1,22 +1,24 @@
 const User = require("../models/User");
+const Order = require("../models/Order");
 
 async function index(req, res) {
   try {
     const users = await User.find().select("-password");
     return res.status(200).json(users);
-  }catch(err){
+  } catch (err) {
     return res.status(401).json(err);
   }
-  
 }
 
 async function show(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email }).select("-password");
+    const orders = await Order.find({ where: { user: req.auth.userId } });
+    user.orders = orders;
     return res.status(200).json(user);
-  } catch(err) {
+  } catch (err) {
     return res.status(401).json(err);
-  } 
+  }
 }
 
 async function store(req, res) {

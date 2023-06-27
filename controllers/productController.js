@@ -56,10 +56,12 @@ async function store(req, res) {
 async function update(req, res) {
   console.log(req.params);
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, {
+    await Product.findByIdAndUpdate(req.params.id, {
       stock: req.body.stock,
     });
-    res.status(201).json(product);
+    const productToFront = await Product.findById(req.params.id);
+
+    res.status(201).json(productToFront);
   } catch (err) {
     res.status(404).json(err);
   }

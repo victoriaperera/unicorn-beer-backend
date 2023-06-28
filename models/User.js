@@ -26,6 +26,7 @@ userSchema.methods.toJSON = function () {
 
 userSchema.pre("save", async function (next) {
   // Solo hashear la contraseña si ha sido modificada o es nueva
+
   if (!this.isModified("password")) {
     return next();
   }

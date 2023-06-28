@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 async function login(req, res) {
+  console.log("me quiero logear");
   const user = await User.findOne({ email: req.body.email });
   if (user) {
     checkPass = await bcrypt.compare(req.body.password, user.password);

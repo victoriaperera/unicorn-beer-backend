@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 async function index(req, res) {
   const admin = await Admin.find().select("-password");
-
   return res.json(admin);
 }
 

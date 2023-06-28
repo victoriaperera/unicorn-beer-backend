@@ -50,6 +50,10 @@ async function update(req, res) {
     },
     { new: true },
   ).select("-password");
+  const orders = await Order.find({ user: req.auth.id })
+    .sort({ createdAt: -1 })
+    .populate("user", "-password");
+  user._doc.orders = orders;
 
   return res.status(202).json(user);
 }
@@ -59,10 +63,16 @@ async function destroy(req, res) {
   res.status(200).json("Se ha borrado el usuario correctamente");
 }
 
+async function getOrders(req, res) {
+  const orders = await Order.find({ user: req.auth.id }).sort({ createdAt: -1 });
+  return res.status(200).json(orders);
+}
+
 module.exports = {
   index,
   show,
   store,
   update,
   destroy,
+  getOrders,
 };

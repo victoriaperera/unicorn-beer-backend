@@ -5,12 +5,21 @@ var { expressjwt: checkJwt } = require("express-jwt");
 
 router.get("/", userController.index);
 router.get(
+  "/orders/:id",
+  checkJwt({ secret: process.env.JWT_CUSTOMER_SECRET_KEY, algorithms: ["HS256"] }),
+  userController.getOrders,
+);
+router.get(
   "/:id",
   checkJwt({ secret: process.env.JWT_CUSTOMER_SECRET_KEY, algorithms: ["HS256"] }),
   userController.show,
 );
 router.post("/", userController.store);
-router.patch("/:id", userController.update);
+router.patch(
+  "/:id",
+  checkJwt({ secret: process.env.JWT_CUSTOMER_SECRET_KEY, algorithms: ["HS256"] }),
+  userController.update,
+);
 router.delete(
   "/",
   checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),

@@ -26,14 +26,14 @@ userSchema.methods.toJSON = function () {
 
 userSchema.pre("save", async function (next) {
   // Solo hashear la contraseña si ha sido modificada o es nueva
-
+  // console.log("svew");
   if (!this.isModified("password")) {
     return next();
   }
 
   try {
     // Hashear la contraseña
-    const hashedPassword = await bcrypt.hash(this.password, 10);
+    const hashedPassword =  bcrypt.hash(this.password, 10);
 
     // Reemplazar la contraseña en texto plano por la contraseña hasheada
     this.password = hashedPassword;

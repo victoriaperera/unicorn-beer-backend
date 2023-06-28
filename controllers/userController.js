@@ -90,6 +90,11 @@ async function resetPass(req, res) {
   return res.status(202).json(user);
 }
 
+async function getOrders(req, res) {
+  const orders = await Order.find({ user: req.auth.id }).sort({ createdAt: -1 });
+  return res.status(200).json(orders);
+}
+
 module.exports = {
   index,
   show,

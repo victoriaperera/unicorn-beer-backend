@@ -18,12 +18,15 @@ async function login(req, res) {
       const orders = await Order.find({ user: user._id })
         .sort({ createdAt: -1 })
         .populate("user", "-password");
+
       user._doc.orders = orders;
 
       return res.status(201).json(user);
+    } else {
+      return res.status(401).send({ message: "Incorrect password, try again." });
     }
   } else {
-    return res.status(401).send({ message: "Incorrect Credentials" });
+    return res.status(401).send({ message: "Incorrect email, try again." });
   }
 }
 

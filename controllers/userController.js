@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const Order = require("../models/Order");
+const jwt = require("jsonwebtoken");
+const { sendForgotPassMail } = require("../middlewares/sendForgotPassMail");
 
 async function index(req, res) {
   try {
@@ -63,9 +65,29 @@ async function destroy(req, res) {
   res.status(200).json("Se ha borrado el usuario correctamente");
 }
 
-async function getOrders(req, res) {
-  const orders = await Order.find({ user: req.auth.id }).sort({ createdAt: -1 });
-  return res.status(200).json(orders);
+async function requestPass(req, res) {
+  const user = await User.findOne({ email: req.body.email }).select("-password");
+  if (user) {
+    sendForgotPassMail(user);
+    res.status(200).json("Check your email for more information");
+  } else {
+    res.status(400).json("This account does not exist");
+  }
+}
+
+async function resetPass(req, res) {
+  const user = await User.findById(req.params.id);
+
+  const token = jwt.sign({ id: user.id }, process.env.JWT_CUSTOMER_SECRET_KEY, {
+    expiresIn: "10h",
+  });
+
+  user.password = String(req.body.password);
+  await user.save();
+  delete user._doc.password;
+  user._doc.token = token;
+
+  return res.status(202).json(user);
 }
 
 module.exports = {
@@ -75,4 +97,6 @@ module.exports = {
   update,
   destroy,
   getOrders,
+  requestPass,
+  resetPass,
 };

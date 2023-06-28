@@ -1,5 +1,4 @@
 const Admin = require("../models/Admin");
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -26,7 +25,19 @@ async function login(req, res) {
     return res.status(401).send({ message: "Incorrect Credentials" });
   }
 }
-
+async function store(req, res) {
+  try{
+    const admin = await Admin.create({
+      email: req.body.email,
+      password: req.body.password,
+      name: req.body.name
+    })
+    console.log(admin)
+    return res.status(200).json(admin)
+  }catch (err){
+    return res.status(404).send({ message: "Something went wrong, try again later" });
+  }
+}
 async function destroy(req, res) {
   try {
     await Admin.findByIdAndDelete(req.body.adminId);
@@ -38,6 +49,7 @@ async function destroy(req, res) {
 
 module.exports = {
   index,
+  store,
   login,
   destroy,
 };

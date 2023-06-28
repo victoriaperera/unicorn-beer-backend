@@ -23,10 +23,10 @@ async function login(req, res) {
 
       return res.status(201).json(user);
     } else {
-      return res.status(401).send({ message: "Incorrect Credentials" });
+      return res.status(401).send({ message: "Incorrect password, try again." });
     }
   } else {
-    return res.status(401).send({ message: "Incorrect Credentials" });
+    return res.status(401).send({ message: "Incorrect email, try again." });
   }
 }
 

@@ -3,12 +3,22 @@ const router = express.Router();
 const adminController = require("../controllers/adminController");
 var { expressjwt: checkJwt } = require("express-jwt");
 
-router.post("/token", adminController.login);
 router.get("/", adminController.index);
-router.delete(
-  "/:id",
+router.post(
+  "/",
   checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
-  adminController.destroy,
+  adminController.store
+);
+router.patch(
+  "/",
+  checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
+  adminController.update
+);
+router.post("/token", adminController.login);
+router.delete(
+  "/",
+  checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
+  adminController.destroy
 );
 
 module.exports = router;

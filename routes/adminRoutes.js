@@ -9,6 +9,11 @@ router.post(
   checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
   adminController.store
 );
+router.patch(
+  "/",
+  checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
+  adminController.update
+);
 router.post("/token", adminController.login);
 router.delete(
   "/",

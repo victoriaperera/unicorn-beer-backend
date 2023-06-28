@@ -28,8 +28,12 @@ async function login(req, res) {
 }
 
 async function destroy(req, res) {
-  await User.findByIdAndDelete(req.params.id);
-  res.status(200).json("Se ha borrado el usuario correctamente");
+  try {
+    await Admin.findByIdAndDelete(req.body.adminId);
+    return res.status(200).send({ message: "Admin deleted" });
+  } catch (err) {
+    return res.status(404).send({ message: "Something went wrong, try again later" });
+  }
 }
 
 module.exports = {

@@ -28,6 +28,11 @@ module.exports = async () => {
       email: "ivana.sugliano@gmail.com",
       password: await bcrypt.hash(process.env.SESSION_CREDENTIAL, 10),
     },
+    {
+      name: "Admin Test",
+      email: "test@test.com",
+      password: await bcrypt.hash(process.env.SESSION_CREDENTIAL, 10),
+    },
   ];
 
   await Admin.insertMany(admins);

@@ -2,6 +2,11 @@ const Style = require("../models/Style");
 const Product = require("../models/Product");
 const Container = require("../models/Container");
 const formidable = require("formidable");
+const fs = require("fs");
+const path = require("path");
+const { createClient } = require("@supabase/supabase-js");
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 async function index(req, res) {
   const styles = await Style.find().populate("containers");
@@ -12,7 +17,7 @@ async function index(req, res) {
 async function store(req, res) {
   const form = formidable({
     multiples: true,
-    uploadDir: __dirname + "/../public/img",
+
     keepExtensions: true,
   });
   form.parse(req, async (err, fields, files) => {
@@ -52,6 +57,14 @@ async function store(req, res) {
       }
     }
 
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(__filename, fs.createReadStream(files.photos.filepath), {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: files.photos.mimetype,
+      });
+
     style
       ? res.status(201).json(style)
       : res.status(409).send({ message: "Something went wrong, try again later" });
@@ -61,10 +74,10 @@ async function store(req, res) {
 async function update(req, res) {
   const form = formidable({
     multiples: true,
-    uploadDir: __dirname + "/../public/img",
+
     keepExtensions: true,
     filename: (name, ext, part, form) => {
-      return `${part.originalFilename}`; // Will be joined with options.uploadDir.
+      return `${part.originalFilename}`;
     },
   });
 
@@ -91,6 +104,14 @@ async function update(req, res) {
         newStyle.photos.push(files.photos.originalFilename);
       }
     }
+
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(__filename, fs.createReadStream(files.images.filepath), {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: files.images.mimetype,
+      });
 
     const updatedStyle = await Style.findByIdAndUpdate(req.params.id, newStyle, { new: true });
 

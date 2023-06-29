@@ -17,4 +17,5 @@ const sendEmail = (order, updated) => {
   sgMail.send(msg).then(() => console.log("Email sent"));
 };
 
+
 module.exports = { sendEmail };

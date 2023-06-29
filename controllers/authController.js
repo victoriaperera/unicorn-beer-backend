@@ -72,6 +72,6 @@ async function logOut(req, res) {
   res.json({ message: "Logged out successfully" });
 }
 
-//TODO: hacer edit password
+
 
 module.exports = { login, signUp, logOut };

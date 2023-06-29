@@ -6,7 +6,7 @@ const sendEmail = (order, updated) => {
   const msg = {
     to: ["unicorn.craftbeer+@gmail.com"],
     from: "unicorn.craftbeer@gmail.com",
-    subject: `There is ${updated ? "a new order dispatched" : "an update"} on order N°${order.id}`,
+    subject: `There is ${updated ? "an update" : "a new order dispatched"} on order N°${order.id}`,
     text: "Contenido del correo electrónico en formato de texto sin formato",
     html: `<h1>Hello Admins,</h1>
     <p>There is a new order dispatched on ${order.createdAt}!</p>

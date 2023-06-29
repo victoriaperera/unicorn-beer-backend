@@ -12,7 +12,7 @@ router.post(
 );
 router.patch(
   "/:id",
-  checkJwt({ secret: process.env.JWT_CUSTOMER_SECRET_KEY, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
   orderController.update,
 );
 router.delete(

@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   // Solo hashear la contraseña si ha sido modificada o es nueva
-  // console.log("svew");
+
   if (!this.isModified("password")) {
     return next();
   }

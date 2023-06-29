@@ -31,7 +31,7 @@ async function store(req, res) {
         stock: product.stock - product.quantity,
       });
     }
-    // sendEmail(order, updated);
+    sendEmail(order, updated);
     return res.status(201).json(order);
   } catch (err) {
     console.log(err);
@@ -54,7 +54,7 @@ async function update(req, res) {
     },
     { new: true },
   );
-  // sendEmail(order, updated)
+  sendEmail(order, updated);
   return res.status(209).json(order);
 }
 

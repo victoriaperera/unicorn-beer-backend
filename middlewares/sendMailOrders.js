@@ -4,13 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
 const sendEmail = (order, updated) => {
   const msg = {
-    to: [
-      "nicomar2004@gmail.com",
-      "mvperera@gmail.com",
-      "lorec.rincon@gmail.com",
-      "estebanc_b@hotmail.com",
-      "noahsugliano@gmail.com",
-    ],
+    to: ["unicorn.craftbeer+@gmail.com"],
     from: "unicorn.craftbeer@gmail.com",
     subject: `There is ${updated ? "a new order dispatched" : "an update"} on order N°${order.id}`,
     text: "Contenido del correo electrónico en formato de texto sin formato",

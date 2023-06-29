@@ -12,9 +12,13 @@ router.post(
 );
 router.patch(
   "/:id",
-
+  checkJwt({ secret: process.env.JWT_CUSTOMER_SECRET_KEY, algorithms: ["HS256"] }),
   orderController.update,
 );
-router.delete("/", orderController.destroy);
+router.delete(
+  "/",
+  checkJwt({ secret: process.env.JWT_ADMIN_SECRET_KEY, algorithms: ["HS256"] }),
+  orderController.destroy,
+);
 
 module.exports = router;

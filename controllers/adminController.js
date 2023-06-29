@@ -13,7 +13,7 @@ async function login(req, res) {
 
     if (checkPass) {
       const token = jwt.sign({ id: admin.id }, process.env.JWT_ADMIN_SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: "9h",
       });
       delete admin._doc.password;
       admin._doc.token = token;

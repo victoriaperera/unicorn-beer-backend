@@ -50,7 +50,6 @@ async function store(req, res) {
 }
 
 async function update(req, res) {
-  console.log(req.params);
   try {
     await Product.findByIdAndUpdate(req.params.id, {
       stock: req.body.stock,

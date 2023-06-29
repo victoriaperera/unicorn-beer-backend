@@ -2,7 +2,7 @@ const { mongoose, Schema } = require("../db");
 const slugify = require("slugify");
 const Style = require("./Style");
 const Container = require("./Container");
-const mongoose_delete = require('mongoose-delete');
+const mongoose_delete = require("mongoose-delete");
 
 const productSchema = new mongoose.Schema({
   style: {
@@ -20,7 +20,14 @@ const productSchema = new mongoose.Schema({
   name: String,
 });
 productSchema.plugin(mongoose_delete);
-productSchema.set("toJSON", { virtuals: true });
+// productSchema.set("toJSON", { virtuals: true });
+
+productSchema.methods.toJSON = function () {
+  const product = this._doc;
+  product.id = this._id.toString();
+  delete product._id;
+  return product;
+};
 
 productSchema.methods.setData = async function () {
   const style = await Style.findById(this.style);

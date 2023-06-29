@@ -14,6 +14,12 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-orderSchema.set("toJSON", { virtuals: true });
+// orderSchema.set("toJSON", { virtuals: true });
+orderSchema.methods.toJSON = function () {
+  const order = this._doc;
+  order.id = this._id.toString();
+  delete order._id;
+  return order;
+};
 
 module.exports = mongoose.model("Order", orderSchema);

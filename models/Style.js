@@ -8,6 +8,13 @@ const styleSchema = new mongoose.Schema({
   abv: Number,
   containers: [],
 });
-styleSchema.set("toJSON", { virtuals: true });
+// styleSchema.set("toJSON", { virtuals: true });
+
+styleSchema.methods.toJSON = function () {
+  const style = this._doc;
+  style.id = this._id.toString();
+  delete style._id;
+  return style;
+};
 
 module.exports = mongoose.model("Style", styleSchema);

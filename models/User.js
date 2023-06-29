@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
 userSchema.methods.toJSON = function () {
   const user = this._doc;
   user.id = this._id.toString();
-  // delete user._id;
+  delete user._id;
   return user;
 };
 

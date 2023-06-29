@@ -57,7 +57,7 @@ async function update(req, res) {
     { new: true },
   );
   sendEmail(order, updated);
-  return res.status(209).json(order).send(req.body);
+  return res.status(209).json(order);
 }
 
 async function destroy(req, res) {

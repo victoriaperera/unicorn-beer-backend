@@ -24,6 +24,17 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
+userSchema.virtual("slug").get(function () {
+  return slugify(this.name, {
+    replacement: "-", // replace spaces with replacement character, defaults to `-`
+    remove: undefined, // remove characters that match regex, defaults to `undefined`
+    lower: true, // convert to lower case, defaults to `false`
+    strict: true, // strip special characters except replacement, defaults to `false`
+    locale: "en", // language code of the locale to use
+    trim: true, // trim leading and trailing replacement chars, defaults to `true`
+  });
+});
+
 userSchema.pre("save", async function (next) {
   // Solo hashear la contraseña si ha sido modificada o es nueva
   // console.log("svew");
@@ -33,7 +44,7 @@ userSchema.pre("save", async function (next) {
 
   try {
     // Hashear la contraseña
-    const hashedPassword =  bcrypt.hash(this.password, 10);
+    const hashedPassword = bcrypt.hash(this.password, 10);
 
     // Reemplazar la contraseña en texto plano por la contraseña hasheada
     this.password = hashedPassword;

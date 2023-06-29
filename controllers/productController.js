@@ -3,13 +3,9 @@ const Container = require("../models/Container");
 const Style = require("../models/Style");
 
 async function index(req, res) {
-  try {
-    const products = await Product.find().populate("container").populate("style");
+  const products = await Product.find().populate("container").populate("style");
 
-    return res.json(products);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  return res.status(200).json(products);
 }
 
 async function show(req, res) {

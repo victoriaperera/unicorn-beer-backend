@@ -17,12 +17,12 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-userSchema.methods.toJSON = function () {
-  const user = this._doc;
-  user.id = this._id.toString();
-  delete user._id;
-  return user;
-};
+// userSchema.methods.toJSON = function () {
+//   const user = this._doc;
+//   user.id = this._id.toString();
+//   delete user._id;
+//   return user;
+// };
 
 // userSchema.virtual("slug").get(function () {
 //   return slugify(`${this.firstname} ${this.lastname}`, {

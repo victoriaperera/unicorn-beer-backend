@@ -91,7 +91,9 @@ async function resetPass(req, res) {
 }
 
 async function getOrders(req, res) {
-  const orders = await Order.find({ user: req.auth.id }).sort({ createdAt: -1 });
+  const orders = await Order.find({ user: req.auth.id })
+    .sort({ createdAt: -1 })
+    .populate("user", "-password");
   return res.status(200).json(orders);
 }
 

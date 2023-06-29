@@ -24,8 +24,8 @@ module.exports = async () => {
       password: await bcrypt.hash(process.env.SESSION_CREDENTIAL, 10),
     },
     {
-      name: "Ivana Sugliano",
-      email: "ivana.sugliano@gmail.com",
+      name: "Noah Sugliano",
+      email: "noah.sugliano@gmail.com",
       password: await bcrypt.hash(process.env.SESSION_CREDENTIAL, 10),
     },
     {

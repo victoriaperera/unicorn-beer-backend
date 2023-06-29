@@ -105,7 +105,7 @@ async function update(req, res) {
       }
     }
 
-    const { data, error } = await supabase.storage
+    const { data, error } = await supabase.storage //TODO: ver esto
       .from("images")
       .upload(__filename, fs.createReadStream(files.images.filepath), {
         cacheControl: "3600",

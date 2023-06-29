@@ -121,7 +121,7 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   console.log(req.body);
-  const style = await Style.findByIdAndDelete(req.body.styleId);
+  const style = await Style.findByIdAndDelete(req.body.style);
   const products = await Product.find({ style: style._id });
   for (const product of products) {
     await Product.findByIdAndDelete(product._id);

@@ -41,7 +41,7 @@ async function store(req, res) {
 
 async function update(req, res) {
   const updated = true;
-  console.log(req.body);
+
   const order = await Order.findByIdAndUpdate(
     req.body.orderId,
     {
@@ -56,7 +56,7 @@ async function update(req, res) {
     { new: true },
   );
   sendEmail(order, updated);
-  return res.status(209).json(order);
+  return res.status(209).json(order).send(req.body);
 }
 
 async function destroy(req, res) {

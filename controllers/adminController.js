@@ -19,37 +19,40 @@ async function login(req, res) {
       admin._doc.token = token;
 
       return res.status(201).json(admin);
+    } else {
+      return res.status(401).send({ message: "Incorrect Credentials" });
     }
   } else {
     return res.status(401).send({ message: "Incorrect Credentials" });
   }
 }
 async function store(req, res) {
-  try{
+  try {
     const admin = await Admin.create({
       email: req.body.email,
       password: req.body.password,
-      name: req.body.name
-    })
-    return res.status(200).json(admin)
-  }catch (err){
+      name: req.body.name,
+    });
+    return res.status(200).json(admin);
+  } catch (err) {
     return res.status(404).send({ message: "Something went wrong, try again later" });
   }
 }
 async function update(req, res) {
-  try{
-    const admin = await Admin.findByIdAndUpdate(req.body.id, 
+  try {
+    const admin = await Admin.findByIdAndUpdate(
+      req.body.id,
       {
         name: req.body.name,
         email: req.body.email,
-        password: await bcrypt.hash(req.body.password, 10)
+        password: await bcrypt.hash(req.body.password, 10),
       },
-      { new: true }
-      );
-      
-    return res.status(200).json(admin)
-  }catch(err){
-    return res.status(400).send({ message: "Something went wrong, try again later" })
+      { new: true },
+    );
+
+    return res.status(200).json(admin);
+  } catch (err) {
+    return res.status(400).send({ message: "Something went wrong, try again later" });
   }
 }
 async function destroy(req, res) {

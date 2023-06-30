@@ -48,9 +48,10 @@ async function store(req, res) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {
           style.photos.push(photo.originalFilename);
+          const photoData = fs.readFileSync(photo.filepath);
           const { data, error } = await supabase.storage
             .from("unicorn-beer-bucket")
-            .upload(photo.originalFilename, fs.createReadStream(photo.filepath), {
+            .upload(photo.originalFilename, photoData, {
               cacheControl: "3600",
               upsert: false,
               contentType: files.photos.mimetype,
@@ -66,6 +67,7 @@ async function store(req, res) {
             cacheControl: "3600",
             upsert: false,
             contentType: files.photos.mimetype,
+            duplex,
           });
         error ? console.log(error) : null;
         style.save();

@@ -17,7 +17,6 @@ async function index(req, res) {
 async function store(req, res) {
   const form = formidable({
     multiples: true,
-
     keepExtensions: true,
   });
   form.parse(req, async (err, fields, files) => {
@@ -58,8 +57,8 @@ async function store(req, res) {
     }
 
     const { data, error } = await supabase.storage
-      .from("images")
-      .upload(__filename, fs.createReadStream(files.photos.filepath), {
+      .from("unicorn-beer-bucket")
+      .upload(`img/`, fs.createReadStream(files.photos.filepath), {
         cacheControl: "3600",
         upsert: false,
         contentType: files.photos.mimetype,
@@ -120,7 +119,6 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-
   const style = await Style.findByIdAndDelete(req.body.styleId);
   const products = await Product.find({ style: style._id });
   for (const product of products) {

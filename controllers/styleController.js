@@ -68,7 +68,6 @@ async function store(req, res) {
             cacheControl: "3600",
             upsert: false,
             contentType: files.photos.mimetype,
-            duplex,
           });
         error ? console.log(error) : null;
         style.save();

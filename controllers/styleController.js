@@ -44,6 +44,8 @@ async function store(req, res) {
       photos: [],
     });
 
+    console.log(files.photos);
+
     if (files.photos !== undefined) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {

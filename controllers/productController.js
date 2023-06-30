@@ -17,7 +17,7 @@ async function show(req, res) {
 async function store(req, res) {
   console.log(req.body);
   try {
-    const container = await Container.findById(req.body.container);
+    const container = await Container.find({ name: req.body.container });
     const style = await Style.findById(req.body.style);
     let name = ``;
     if (container.name === "keg") {

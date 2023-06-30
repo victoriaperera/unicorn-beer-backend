@@ -15,10 +15,11 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  console.log(req.body);
   try {
     const container = await Container.find({ name: req.body.container });
     const style = await Style.findById(req.body.style);
+    console.log("container: ", container);
+    console.log("style: ", style);
     let name = ``;
     if (container.name === "keg") {
       name = `${style.name} ${container.name} ${(
@@ -47,6 +48,7 @@ async function store(req, res) {
     return res.status(200).json(product);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 }
 

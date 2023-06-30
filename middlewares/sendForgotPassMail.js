@@ -11,7 +11,7 @@ const sendForgotPassMail = (user) => {
     html: `<h1>Hello ${user.firstname},</h1>
         <p>We have received a password change request for your Unicorn beer account (${user.email}).</p>
         <p>If you did not ask to change your password, then you can ignore this email and your password will not be changed.</p>
-        <p><a href="http://localhost:5173/forgotpassword/${user.id}">[Change you password]</a></p>`,
+        <p><a href="http://unicornbeer.vercel.app/forgotpassword/${user.id}">[Change you password]</a></p>`,
   };
 
   sgMail.send(msg).then(() => console.log("Email sent"));

@@ -103,7 +103,6 @@ async function update(req, res) {
       newStyle.photos.push(...style.photos);
     }
     console.log(files.photos);
-    console.log("update")
     if (files.photos !== undefined) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {

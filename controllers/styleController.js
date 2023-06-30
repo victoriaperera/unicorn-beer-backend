@@ -105,17 +105,17 @@ async function update(req, res) {
     console.log(files.photos);
     if (files.photos !== undefined) {
       if (Array.isArray(files.photos)) {
-        for (const photo of files.photos) {
-          newStyle.photos.push(photo.originalFilename);
-          const photoData = fs.readFileSync(photo.filepath);
-          const { data, error } = await supabase.storage
-            .from("unicorn-beer-bucket")
-            .upload(photo.originalFilename, photoData, {
-              cacheControl: "3600",
-              upsert: false,
-              contentType: files.photos.mimetype,
-            });
-        }
+        // for (const photo of files.photos) {
+        //   newStyle.photos.push(photo.originalFilename);
+        //   const photoData = fs.readFileSync(photo.filepath);
+        //   const { data, error } = await supabase.storage
+        //     .from("unicorn-beer-bucket")
+        //     .upload(photo.originalFilename, photoData, {
+        //       cacheControl: "3600",
+        //       upsert: false,
+        //       contentType: files.photos.mimetype,
+        //     });
+        // }
       } else {
         const photoData = fs.readFileSync(files.photos.filepath);
         const { data, error } = await supabase.storage

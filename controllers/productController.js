@@ -35,6 +35,7 @@ async function store(req, res) {
       ).toFixed(2)} Oz`;
     }
     const price = `${(style.price * container.volume).toFixed(2)}`;
+    console.log("price: ", price);
 
     const newProduct = await Product.create({
       style: style,
@@ -42,7 +43,7 @@ async function store(req, res) {
       stock: req.body.stock,
       featured: req.body.featured,
       name: name,
-      price: Number(price),
+      // price: Number(price),
     });
     const product = await Product.findOne(newProduct).populate("container").populate("style"); // TODO
     return res.status(200).json(product);

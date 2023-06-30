@@ -61,9 +61,10 @@ async function store(req, res) {
         style.save();
       } else {
         style.photos.push(files.photos.originalFilename);
+        const photoData = fs.readFileSync(files.photos.filepath);
         const { data, error } = await supabase.storage
           .from("unicorn-beer-bucket")
-          .upload(files.photos.originalFilename, fs.createReadStream(files.photos.filepath), {
+          .upload(files.photos.originalFilename, photoData, {
             cacheControl: "3600",
             upsert: false,
             contentType: files.photos.mimetype,

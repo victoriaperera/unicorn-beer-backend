@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
   },
   name: String,
 });
-productSchema.plugin(mongoose_delete);
+// productSchema.plugin(mongoose_delete);
 productSchema.set("toJSON", { virtuals: true });
 
 // productSchema.methods.toJSON = function () {

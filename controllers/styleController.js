@@ -48,21 +48,27 @@ async function store(req, res) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {
           style.photos.push(photo.originalFilename);
+          const { data, error } = await supabase.storage
+            .from("unicorn-beer-bucket")
+            .upload(photo.originalFilename, fs.createReadStream(photo.filepath), {
+              cacheControl: "3600",
+              upsert: false,
+              contentType: files.photos.mimetype,
+            });
         }
         style.save();
       } else {
         style.photos.push(files.photos.originalFilename);
+        const { data, error } = await supabase.storage
+          .from("unicorn-beer-bucket")
+          .upload(files.photos.originalFilename, fs.createReadStream(files.photos.filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.photos.mimetype,
+          });
         style.save();
       }
     }
-
-    const { data, error } = await supabase.storage
-      .from("unicorn-beer-bucket")
-      .upload(`img/${files.photos.originalFilename}`, fs.createReadStream(files.photos.filepath), {
-        cacheControl: "3600",
-        upsert: false,
-        contentType: files.photos.mimetype,
-      });
 
     style
       ? res.status(201).json(style)

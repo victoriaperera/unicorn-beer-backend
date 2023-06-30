@@ -83,7 +83,6 @@ async function store(req, res) {
 async function update(req, res) {
   const form = formidable({
     multiples: true,
-
     keepExtensions: true,
     filename: (name, ext, part, form) => {
       return `${part.originalFilename}`;
@@ -103,24 +102,32 @@ async function update(req, res) {
     if (Array.isArray(style.photos)) {
       newStyle.photos.push(...style.photos);
     }
-
+    console.log(files.photos);
     if (files.photos !== undefined) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {
           newStyle.photos.push(photo.originalFilename);
+          const photoData = fs.readFileSync(photo.filepath);
+          const { data, error } = await supabase.storage
+            .from("unicorn-beer-bucket")
+            .upload(photo.originalFilename, photoData, {
+              cacheControl: "3600",
+              upsert: false,
+              contentType: files.photos.mimetype,
+            });
         }
       } else {
+        const photoData = fs.readFileSync(files.photos.filepath);
+        const { data, error } = await supabase.storage
+          .from("unicorn-beer-bucket")
+          .upload(files.photos.originalFilename, photoData, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files.photos.mimetype,
+          });
         newStyle.photos.push(files.photos.originalFilename);
       }
     }
-
-    const { data, error } = await supabase.storage //TODO: ver esto
-      .from("images")
-      .upload(__filename, fs.createReadStream(files.images.filepath), {
-        cacheControl: "3600",
-        upsert: false,
-        contentType: files.images.mimetype,
-      });
 
     const updatedStyle = await Style.findByIdAndUpdate(req.params.id, newStyle, { new: true });
 

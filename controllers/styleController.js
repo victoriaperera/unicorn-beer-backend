@@ -55,6 +55,7 @@ async function store(req, res) {
               upsert: false,
               contentType: files.photos.mimetype,
             });
+          error ? console.log(error) : null;
         }
         style.save();
       } else {
@@ -66,6 +67,7 @@ async function store(req, res) {
             upsert: false,
             contentType: files.photos.mimetype,
           });
+        error ? console.log(error) : null;
         style.save();
       }
     }

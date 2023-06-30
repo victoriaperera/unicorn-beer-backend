@@ -2,7 +2,7 @@ const { mongoose, Schema } = require("../db");
 
 const orderSchema = new mongoose.Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    user: {},
     products: [],
     totalAmount: Number,
     totalQuantity: Number,

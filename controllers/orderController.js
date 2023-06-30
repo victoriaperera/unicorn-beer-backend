@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 const { sendEmail } = require("../middlewares/sendMailOrders");
 
 async function index(req, res) {
-  const orders = await Order.find().sort({ createdAt: -1 }).populate("products").populate("user");
+  const orders = await Order.find().sort({ createdAt: -1 });
 
   return res.json(orders);
 }
@@ -17,7 +17,7 @@ async function store(req, res) {
   const updated = false;
   try {
     const order = await Order.create({
-      user: req.auth.id,
+      user: req.body.user,
       products: req.body.products,
       totalAmount: req.body.totalAmount,
       totalQuantity: req.body.totalQuantity,

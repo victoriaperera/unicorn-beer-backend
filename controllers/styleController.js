@@ -44,8 +44,6 @@ async function store(req, res) {
       photos: [],
     });
 
-    console.log(files.photos);
-
     if (files.photos !== undefined) {
       if (Array.isArray(files.photos)) {
         for (const photo of files.photos) {
@@ -60,7 +58,7 @@ async function store(req, res) {
 
     const { data, error } = await supabase.storage
       .from("unicorn-beer-bucket")
-      .upload(files.photos.originalFilename, fs.createReadStream(files.photos.filepath), {
+      .upload(`img/${files.photos.originalFilename}`, fs.createReadStream(files.photos.filepath), {
         cacheControl: "3600",
         upsert: false,
         contentType: files.photos.mimetype,

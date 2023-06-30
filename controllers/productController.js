@@ -15,7 +15,7 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  console.log(req.body.container)
+  console.log(req.body.container);
   try {
     const container = await Container.findById(req.body.container);
     const style = await Style.findById(req.body.style);
@@ -36,7 +36,6 @@ async function store(req, res) {
       ).toFixed(2)} Oz`;
     }
     const price = `${(style.price * container.volume).toFixed(2)}`;
-    console.log("price: ", price);
 
     const newProduct = await Product.create({
       style: style,
@@ -44,13 +43,13 @@ async function store(req, res) {
       stock: req.body.stock,
       featured: req.body.featured,
       name: name,
-      // price: Number(price),
+      price: price,
     });
     const product = await Product.findOne(newProduct).populate("container").populate("style"); // TODO
     return res.status(200).json(product);
   } catch (err) {
     res.status(400).json(err);
-    console.log(err);
+    
   }
 }
 
